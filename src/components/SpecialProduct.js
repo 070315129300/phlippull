@@ -1,58 +1,182 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import prodcompare from "../images/prodcompare.svg";
+import wish from "../images/wish.svg";
+import wishlist from "../images/wishlist.svg";
+import watch from "../images/watch.jpg";
+import watch2 from "../images/watch-1.avif";
+import addcart from "../images/add-cart.svg";
+import view from "../images/view.svg";
 import ReactStars from "react-rating-stars-component";
-import { Link } from "react-router-dom";
-const SpecialProduct = () => {
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlist } from "../features/products/productSlice";
+import {addProdToCart} from "../features/user/userSlice";
+
+
+const SpecialProduct = (props) => {
+  const { grid, data } = props;
+
+  let location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Updated hook
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(24); // Number of items to display per page
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+  };  
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const navigateToProduct = (_id) => {
+    navigate(`/products/${_id}`); // Use navigate function to navigate to the single product page
+  }; 
+   const uploadCart = () =>{
+        dispatch(addProdToCart({
+          productID:currentItems?._id,
+          price:currentItems?.price
+        }))
+    }
+
   return (
     <>
-      <div className="col-4 mb-3">
-        <div className="special-product-card">
-          <div className="d-flex justify-content-between">
-            <div>
-              <img src="images/watch.jpg" className="img-fluid" alt="watch" />
-            </div>
-            <div className="special-product-content">
-              <h5 className="brand">Havels</h5>
-              <h6 className="title">
-                Samsung Galaxy Note10+ Mobile Phone; Sim...
-              </h6>
-              <ReactStars
-                count={5}
-                size={24}
-                value={4}
-                edit={false}
-                activeColor="#ffd700"
-              />
-              <p className="price">
-                <span className="red-p">$100</span> &nbsp; <strike>$200</strike>
-              </p>
-              <div className="discount-till d-flex align-items-center gap-10">
-                <p className="mb-0">
-                  <b>5 </b>days
+      {currentItems?.map((item, index) => {
+        return (
+          <div
+            key={index}
+            className={`${
+              location.pathname === "/product" ? `gr-${grid}` : "col-3"
+            }`}
+          >
+              <Link
+            // to={`${
+            //   location.pathname == "/products/:id"
+            //   ? "/products/:id"
+            //   : ":id"
+            // }`}
+
+            
+            className="product-card position-relative">
+
+              <div className="wishlist-icon position-absolute">
+
+                {/* <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addToWish(item?._id);
+                  }}
+                >
+                  <img src={wish} alt="wishlist" />
+                </button> */}
+              </div>
+              <Link  to={'/products/'+item?._id}  > 
+              <div className="product-image">
+                 <img
+                  src={item?.images[0]}
+                  className="img-fluid"
+                  alt="product image"
+                  width={260}
+                   height={200}
+
+                />
+                <img
+                  src={item?.images[0]}
+                  className="img-fluid"
+                  alt="product image"
+                  width={260}
+                   height={200}
+
+                />
+              </div>
+              </Link>
+              <div className="product-details">
+                <h6 className="brand">{item?.brand_name}</h6>
+                <h5 className="product-title">{item?.name}</h5>
+                <ReactStars
+                  count={5}
+                  size={24}
+                  value={3}
+                  edit={false}
+                  activeColor="#ffd700"
+                />
+                <Link  to={'/products/'+item?._id}  > 
+                <p
+                  className={`description ${
+                    grid === 12 ? "d-block" : "d-none"
+                  }`}
+                >
+                  {item?.details}
                 </p>
-                <div className="d-flex gap-10 align-items-center">
-                  <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                  <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                  <span className="badge rounded-circle p-3 bg-danger">1</span>
+
+                <p className="price" style={{color:"#00008B"}}>&#8358; {item?.lidPrice}</p>
+                <small className="price reduction-price"style={{color:"grey"}}>&#8358; {item?.costPrice}</small>
+                </Link>
+                <div className="row">
+                   <button
+                      className="button "
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#staticBackdrop"
+                      type="button"
+                      onClick={()=>{uploadCart( )}}
+                    >
+                      Add to Cart
+                    </button>
+                      
+
                 </div>
               </div>
-              <div className="prod-count my-3">
-                <p>Products: 5</p>
-                <div className="progress">
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{ width: "25%" }}
-                    aria-valuenow="25"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  ></div>
+              <div className="action-bar position-absolute">
+                <div className="d-flex flex-column gap-15">
+
+                  {/* <Link  to="/products"  state={{ category: { item } }}> 
+                  <button className="border-0 bg-transparent">
+                    <img onClick={() => navigateToProduct(item?._id)} src={view} alt="view" />
+                  </button>
+                  </Link> */}
+    {/* <Link  to={'/products/'+item?._id}  > 
+                  <button className="border-0 bg-transparent">
+                    <img  src={view} alt="view" />
+                  </button>
+                  </Link> */}
+                       
+
+                  <button className="border-0 bg-transparent">
+                    <img src={addcart} alt="addcart" />
+                  </button>
                 </div>
               </div>
-              <Link className="button">Add to Cart</Link>
-            </div>
+            </Link>
           </div>
-        </div>
-      </div>
+        );
+      })}
+      {data?.length > itemsPerPage && (
+        <ul className="pagination">
+          {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map(
+            (_, index) => (
+              <li
+                key={index}
+                className={`page-item ${
+                  currentPage === index + 1 ? "active" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => paginate(index + 1)}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            )
+          )}
+        </ul>
+      )}
     </>
   );
 };

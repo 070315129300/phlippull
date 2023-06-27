@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import watch from "../images/watch.jpg";
 import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserCart } from "../features/user/userSlice";
+
 
 const Cart = () => {
+  const dispatch = useDispatch()
+  const userCartState = useSelector(state=>state.auth.cartProducts)
+  useEffect(() =>{
+    dispatch(getUserCart())
+  },[])
+  console.log(userCartState);
   return (
     <>
       <Meta title={"Cart"} />
@@ -20,10 +29,14 @@ const Cart = () => {
               <h4 className="cart-col-3">Quantity</h4>
               <h4 className="cart-col-4">Total</h4>
             </div>
+            {
+            userCartState && userCartState?.map((item, index)=>{})
+
+            }
             <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
               <div className="cart-col-1 gap-15 d-flex align-items-center">
                 <div className="w-25">
-                  <img src={watch} className="img-fluid" alt="product image" />
+                  <img src={''} className="img-fluid" alt="product image" />
                 </div>
                 <div className="w-75">
                   <p>GDffdhg</p>
@@ -60,7 +73,7 @@ const Cart = () => {
                 Continue To Shopping
               </Link>
               <div className="d-flex flex-column align-items-end">
-                <h4>SubTotal: $ 1000</h4>
+                <h4>SubTotal: $ 100</h4>
                 <p>Taxes and shipping calculated at checkout</p>
                 <Link to="/checkout" className="button">
                   Checkout

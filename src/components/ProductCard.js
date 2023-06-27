@@ -10,6 +10,8 @@ import view from "../images/view.svg";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
+import {addProdToCart} from "../features/user/userSlice";
+
 
 const ProductCard = (props) => {
   const { grid, data } = props;
@@ -33,9 +35,16 @@ const ProductCard = (props) => {
     setCurrentPage(pageNumber);
   };
 
-  // const navigateToProduct = (_id) => {
-  //   navigate(`/products/${_id}`); // Use navigate function to navigate to the single product page
-  // };
+    const uploadCart = () =>{
+        dispatch(addProdToCart({
+          productID:currentItems?._id,
+          price:currentItems?.price
+        }))
+    }
+
+  const navigateToProduct = (_id) => {
+    navigate(`/products/${_id}`); // Use navigate function to navigate to the single product page
+  }; 
 
   return (
     <>
@@ -59,29 +68,34 @@ const ProductCard = (props) => {
 
               <div className="wishlist-icon position-absolute">
 
-                <button
+                {/* <button
                   className="border-0 bg-transparent"
                   onClick={(e) => {
                     addToWish(item?._id);
                   }}
                 >
                   <img src={wish} alt="wishlist" />
-                </button>
+                </button> */}
               </div>
+              <Link  to={'/products/'+item?._id}  > 
               <div className="product-image">
+                 <img
+                  src={item?.images[0]}
+                  className="img-fluid"
+                  alt="product image"
+                   style={{ width: "270px", height: "270px" }}
+
+
+                />
                 <img
                   src={item?.images[0]}
                   className="img-fluid"
                   alt="product image"
-                  width={160}
-                />
-                <img
-                  src={watch2}
-                  className="img-fluid"
-                  alt="product image"
-                  width={160}
+                  style={{ width: "270px", height: "270px" }}
+                  
                 />
               </div>
+              </Link>
               <div className="product-details">
                 <h6 className="brand">{item?.brand_name}</h6>
                 <h5 className="product-title">{item?.name}</h5>
@@ -92,6 +106,7 @@ const ProductCard = (props) => {
                   edit={false}
                   activeColor="#ffd700"
                 />
+                <Link  to={'/products/'+item?._id}  > 
                 <p
                   className={`description ${
                     grid === 12 ? "d-block" : "d-none"
@@ -99,17 +114,42 @@ const ProductCard = (props) => {
                 >
                   {item?.details}
                 </p>
-                <p className="price">{item?.costPrice}</p>
+
+                <p className="price" style={{color:"#00008B"}}>&#8358; {item?.lidPrice}</p>
+                <small className="price reduction-price"style={{color:"grey"}}> &#8358; {item?.costPrice}</small>
+                </Link>
+                <div className="row">
+                   <button
+                      className="button "
+                      // data-bs-toggle="modal"
+                      // data-bs-target="#staticBackdrop"
+                      type="button"
+                      onClick={()=>{uploadCart( )}}
+                    >
+                      Add to Cart
+                    </button>
+                      
+
+                </div>
               </div>
               <div className="action-bar position-absolute">
                 <div className="d-flex flex-column gap-15">
-                 
-                  {/* <button className="border-0 bg-transparent">
-                    <img onClick={() => navigateToProduct(item?._id)} src={view} alt="view" />
-                  </button> */}
+
+                  {/* <Link  to="/products"  state={{ category: { item } }}> 
                   <button className="border-0 bg-transparent">
-                    <img src={addcart} alt="addcart" />
+                    <img onClick={() => navigateToProduct(item?._id)} src={view} alt="view" />
                   </button>
+                  </Link> */}
+    {/* <Link  to={'/products/'+item?._id}  > 
+                  <button className="border-0 bg-transparent">
+                    <img  src={view} alt="view" />
+                  </button>
+                  </Link> */}
+                       
+
+                  {/* <button className="border-0 bg-transparent">
+                    <img src={addcart} alt="addcart" />
+                  </button> */}
                 </div>
               </div>
             </Link>

@@ -32,8 +32,8 @@ const CategoriesCard = (props) => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-   const handleClick = (categorgies) => {
-    console.log('category', categorgies)
+   const handleClick = (category) => {
+    console.log('category', category)
     // history.push({ pathname: "/profile-two", state: data });
   };
   const handlesClick = (itemName)=>{
@@ -49,23 +49,17 @@ const CategoriesCard = (props) => {
             className={`${
               location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}
-            onClick={handleClick(item?.name)}
+            onClick={() => {handleClick(item?.name)}}
             
           >
 
  <li>
-           <Link className="dropdown-item text-white" to="/hoodies">
+           <Link className="dropdown-item text-white" to="/productcopy"  state={{ category: { item } }}>
                <div className="row">
                  <div className="col-4"><img src={item?.icon} width="25px"  /></div>
                  <div className="col-8"><h6>{item?.name}</h6></div>
 
                  </div>
-               
-                 <div className="col-6"><img />
-
-                 <h6>{item?.name}</h6> </div>; 
-               
-
                  
            </Link>
         </li>
@@ -79,6 +73,3 @@ const CategoriesCard = (props) => {
 };
 
 export default CategoriesCard;
-
-
-  

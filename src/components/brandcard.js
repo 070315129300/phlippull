@@ -10,10 +10,9 @@ import view from "../images/view.svg";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPromo } from "../features/promo/promoSlice";
+import {allbrand  } from "../features/brand/brandSlice";
 
-
-
-const PromoCard = (props) => {
+const Brandcard = (props) => {
   const { grid, data } = props;
 
   let location = useLocation();
@@ -21,19 +20,22 @@ const PromoCard = (props) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(24); // Number of items to display per page
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
-
+    
   const getAllAvailable = (_id) => {
-    dispatch(getAllPromo(_id));
+    dispatch(allbrand(_id));
   };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+   const handleClick = (brand) => {
+    console.log('brand', brand)
+    // history.push({ pathname: "/profile-two", state: data });
+  };
+ 
   return (
     <>
       {currentItems?.map((item, index) => {
@@ -43,49 +45,23 @@ const PromoCard = (props) => {
             className={`${
               location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}
+            onClick={() => {handleClick(item?.name)}}          
           >
-            <Link className="product-card ">
- 
-              <div className="">
-                <img src={item?.default_img2} alt="promo image" />
-                <h6>{item?.name}</h6>
-            </div>
-           
-            </Link>
+
+           <Link  to="/productcopy"  state={{ brand: { item } }}>
+               <div className="row">
+                 <div className="col-4"><img src={item?.icon} width="25px"  /></div>
+                 <div className="col-8"><h6>{item?.name}</h6></div>
+
+                 </div>                 
+           </Link>
+   
           </div>
         );
       })}
-      {data?.length > itemsPerPage && (
-        <ul className="pagination">
-          {Array.from({ length: Math.ceil(data.length / itemsPerPage) }).map(
-            (_, index) => (
-              <li
-                key={index}
-                className={`page-item ${
-                  currentPage === index + 1 ? "active" : ""
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() => paginate(index + 1)}
-                >
-                  {index + 1}
-                </button>
-              </li>
-            )
-          )}
-        </ul>
-      )}
+     
     </>
   );
 };
 
-export default PromoCard;
-
-
-
-
-
-
-
-  
+export default Brandcard;

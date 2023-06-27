@@ -9,6 +9,7 @@ import Color from "../components/Color";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import {useLocation} from "react-router-dom";
 // import { productService } from "../features/products/productService";
 
 
@@ -25,13 +26,31 @@ const OurStore = () => {
   const getProducts = () => {
     dispatch(getAllProducts());
   }
+
+  const location = useLocation();
+  const { category } = location.state;
+  const {brand} = location.state;
+  let categoryName = category?.item?.name;
+  let brandName = brand?.item?.name;
+  console.log(brandName);
+  console.log(categoryName);
+  console.log("Product State", productState);
+  const filteredProducts = productState?.filter(
+      (product) => product.category_name === categoryName
+  );
+   const filteredBrand = productState?.filter(
+      (brand) => brand.brand_name === brandName
+  );
+  console.log("filteredProducts", filteredProducts);
+
   return (
     <>
       <Meta title={"Our Store copy"} />
-      <BreadCrumb title="Our Store copy" />
+      <BreadCrumb title=  {categoryName || brandName}/>
+      
       <Container class1="store-wrapper home-wrapper-2 py-5">
         <div className="row">
-          <div className="col-3">
+          {/* <div className="col-3">
             
             <div className="filter-card mb-3">
               <h3 className="filter-title">Filter By</h3>
@@ -114,12 +133,12 @@ const OurStore = () => {
               </div>
             </div>
             
-          </div>
-          <div className="col-9">
+          </div> */}
+          <div className="col">
             <div className="filter-sort-grid mb-4">
               <div className="d-flex justify-content-between align-items-center">
                 <div className="d-flex align-items-center gap-10">
-                  <p className="mb-0 d-block" style={{ width: "100px" }}>
+                  {/* <p className="mb-0 d-block" style={{ width: "100px" }}>
                     Sort By:
                   </p>
                   <select
@@ -138,7 +157,7 @@ const OurStore = () => {
                     <option value="price-descending">Price, high to low</option>
                     <option value="created-ascending">Date, old to new</option>
                     <option value="created-descending">Date, new to old</option>
-                  </select>
+                  </select> */}
                 </div>
                 <div className="d-flex align-items-center gap-10">
                   <p className="totalproducts mb-0">21 Products</p>
@@ -186,7 +205,11 @@ const OurStore = () => {
                    
          <ProductCard 
                     grid={grid} 
-                        data={productState ? productState : []} />
+                        data={filteredProducts ? filteredProducts : productState} />
+
+                            <ProductCard 
+                    grid={grid} 
+                        data={filteredBrand ? filteredBrand : productState} />
                   </div>
                  </div>
                  

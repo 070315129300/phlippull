@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { registerUser } from "../features/user/userSlice";
 
+// please check the schema cayleb
 const signUpSchema = yup.object({
   firstname: yup.string().required("First name is required"),
   lastname: yup.string().required("Last name is required"),
@@ -19,6 +20,9 @@ const signUpSchema = yup.object({
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const navigate  = useNavigate();
+   const [loading, setLoading] = useState(false); // Loading state
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -28,17 +32,17 @@ const Signup = () => {
       password: "",
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
-      dispatch(registerUser(values))
-        .unwrap()
-        .then(() => {
-          // Handle successful registration here
-          console.log("User created successfully");
-        })
-        .catch((error) => {
-          // Handle registration error here
-          console.error("Error creating user:", error);
-        });
+    onSubmit: async (values) => {
+      setLoading(true);
+      try{
+        await dispatch(registerUser(values)).unwrap();
+        console.log("User registered successfully");
+        navigate("/login");
+      } catch (error) {
+        console.error("Error creating user:", error);
+      } finally {
+        setLoading(false); // Set loading state to false after login process
+      }
     },
   });
 
@@ -119,9 +123,9 @@ const Signup = () => {
                 
                 <div>
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
-                    <button className="button border-0" type="submit">
-                      Sign Up
-                    </button>
+                   <button className="button border-0" type="submit">
+  {loading ? "Loading..." : "Sign Up"}
+</button>
                   </div>
                 </div>
               </form>
@@ -134,3 +138,5 @@ const Signup = () => {
 };
 
 export default Signup;
+
+

@@ -1,7 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { BsLinkedin, BsGithub, BsYoutube, BsInstagram } from "react-icons/bs";
-import newsletter from "../images/newsletter.png";
+import { NavLink, Link, Route } from "react-router-dom";
+
+import menu from "../images/menu.svg";
+import { BsLinkedin, BsFacebook, BsTwitter, BsInstagram } from "react-icons/bs";
 const Footer = () => {
   return (
     <>
@@ -10,22 +11,13 @@ const Footer = () => {
           <div className="row align-items-center">
             <div className="col-5">
               <div className="footer-top-data d-flex gap-30 align-items-center">
-                <img src={newsletter} alt="newsletter" />
-                <h2 className="mb-0 text-white">Sign Up for Newsletter</h2>
+                <img src={''} alt="" />
+                <h2 className="mb-0 text-white"></h2>
               </div>
             </div>
             <div className="col-7">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-1"
-                  placeholder="Your Email Address"
-                  aria-label="Your Email Address"
-                  aria-describedby="basic-addon2"
-                />
-                <span className="input-group-text p-2" id="basic-addon2">
-                  Subscribe
-                </span>
+                  
               </div>
             </div>
           </div>
@@ -34,36 +26,54 @@ const Footer = () => {
       <footer className="py-4">
         <div className="container-xxl">
           <div className="row">
+            
+            <div className="col-3">
+              <h4 className="text-white mb-4"></h4>
+              <div className="footer-link d-flex flex-column">
+                        <NavLink to="/">
+
+                {/*<Link className="text-white">Dev Corner</Link>*/}
+                <img
+                    src="images/shop4me.jpg"
+                    style={{ height: '50px', width: '200px' }}
+                    // className="img-fluid rounded-3"
+                    alt="main banner"
+                />
+                </NavLink>
+
+              </div>
+            </div>
+            
             <div className="col-3">
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
                 <address className="text-white fs-6">
-                  <small>  Hno : 57 geogriou cole <br /> Ogba Lagos.</small>
+                  <small>Lagos Nigeria.</small>
                 </address>
                 <a
-                  href="tel:+234 8142720199"
+                  
                   className="mt-3 d-block mb-1 text-white"
                 >
-                  <small>  +234 (0)8142720199</small>
+                  <small>  +234 (0)8164520367</small>
                 </a>
                 <a
                   href="mailto:customercare@blackjoetechnologies.com"
                   className="mt-2 d-block mb-0 text-white"
                 >
-                  <small>  customercare@blackjoetechnologies.com</small>
+                  <small>  surpport@shop4me.com.ng</small>
                 </a>
                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
-                  <a className="text-white" href="#">
+                  <a className="text-white" href="https://www.linkedin.com/company/shop4meinternational/" target="blank">
                     <BsLinkedin className="fs-4" />
                   </a>
-                  <a className="text-white" href="#">
+                  <a className="text-white" href="https://instagram.com/shop4mehq?igshid=ZDc4ODBmNjlmNQ==" target="blank">
                     <BsInstagram className="fs-4" />
                   </a>
-                  <a className="text-white" href="#">
-                    <BsGithub className="fs-4" />
+                  <a className="text-white" href="https://www.facebook.com/profile.php?id=100093461988714&mibextid=ZbWKwL" target="blank">
+                    <BsFacebook className="fs-4" />
                   </a>
-                  <a className="text-white" href="#">
-                    <BsYoutube className="fs-4" />
+                  <a className="text-white" href="https://twitter.com/Shop4mehq?t=QLA9U278UxUa5Eif3P9-og&s=09" target="blank">
+                    <BsTwitter className="fs-4" />
                   </a>
                 </div>
               </div>
@@ -77,38 +87,44 @@ const Footer = () => {
                 <small>   <Link to="/refund-policy" className="text-white py-2 mb-1">
                   Refund Policy
                 </Link></small>
-                <small>  <Link to="/shipping-policy" className="text-white py-2 mb-1">
-                  Shipping Policy
-                </Link></small>
                 <small>  <Link to="/term-conditions" className="text-white py-2 mb-1">
                   Terms & Conditions
                 </Link></small>
               </div>
             </div>
-            <div className="col-2">
-              <h4 className="text-white mb-4">Account</h4>
-              <div className="footer-link d-flex flex-column">
-                <small>  <Link className="text-white py-2 mb-1">About Us</Link></small>
-              <small>  <Link className="text-white py-2 mb-1">Faq</Link></small>
-          <small> <Link className="text-white py-2 mb-1">Contact</Link></small>
-              </div>
-            </div>
-            <div className="col-2">
-              <h4 className="text-white mb-4">Quick Links</h4>
-              <div className="footer-link d-flex flex-column">
-                <small><Link className="text-white py-2 mb-1">Laptops</Link></small>
-                <small> <Link className="text-white py-2 mb-1">Headphones</Link></small>
-                <small><Link className="text-white py-2 mb-1">Tablets</Link></small>
-                <small> <Link className="text-white py-2 mb-1">Watch</Link></small>
-              </div>
-            </div>
-            <div className="col-3">
+            
+           
+            <div className="col-4">
               <h4 className="text-white mb-4">Our Apps</h4>
               <div className="footer-link d-flex flex-column">
-                <small className="text-white mb-4">Download our app and get extra 30% discount on you first order </small>
+                <small className="text-white mb-4">Download our app it one click away</small>
               <div className="row">
-                <div className="col-6"><small><Link className="text-white py-2 mb-1">app store</Link></small></div>
-                <div className="col-6"><small><Link className="text-white py-2 mb-1">playstore</Link></small></div>
+
+                <div className="col-6"><small>
+                  
+                        <NavLink to="https://apps.apple.com/ng/app/shop4me/id6449968422" target="_blank">
+
+                {/*<Link className="text-white">Dev Corner</Link>*/}
+                <img
+                    src="images/appstorelogo.png"
+                    style={{ height: '50px', width: '150px' }}
+                    // className="img-fluid rounded-3"
+                    alt="main banner"
+                />
+                </NavLink>
+                  </small></div>
+                <div className="col-6"><small>
+                        <NavLink to="https://play.google.com/store/apps/details?id=com.blackjoe.shop4me" target="_blank">
+
+                {/*<Link className="text-white">Dev Corner</Link>*/}
+                <img
+                    src="images/playstorelogo.png"
+                    style={{ height: '50px', width: '150px' }}
+                    // className="img-fluid rounded-3"
+                    alt="playstore link"
+                />
+                </NavLink>
+                  </small></div>
               </div>
 
 

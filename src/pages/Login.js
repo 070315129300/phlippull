@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import Container from "../components/Container";
@@ -18,26 +18,29 @@ const loginSchema = yup.object({
 
 const Login = () => {
     const dispatch = useDispatch();
+    const navigate  = useNavigate();
+      const [loading, setLoading] = useState(false); // Loading state
+
     const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      // alert(JSON.stringify(values));  
-      dispatch(loginUser(values))
-       .unwrap()
-        .then(() => {
-          // Handle successful registration here
-          console.log("User created successfully");
-        })
-        .catch((error) => {
-          // Handle registration error here
-          console.error("Error creating user:", error);
-        });
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true
+      try {
+        await dispatch(loginUser(values)).unwrap();
+        console.log("User logged in successfully");
+        navigate("/product"); // Redirect upon successful login
+      } catch (error) {
+        console.error("Error logging user:", error);
+      } finally {
+        setLoading(false); // Set loading state to false after login process
+      }
     },
   });
+ 
 
   return (
     <>
@@ -76,8 +79,9 @@ const Login = () => {
 
                   <div className="mt-3 d-flex justify-content-center gap-15 align-items-center">
                     <button className="button border-0" type="submit">
-                      Login
-                    </button>
+  {loading ? "Loading..." : "Login"}
+</button>
+
                     <Link to="/signup" className="button signup">
                       SignUp
                     </Link>

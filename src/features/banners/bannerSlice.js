@@ -35,7 +35,7 @@ export const bannerSlice = createSlice({
             state.isLoading=false;
             state.isError=false;
             state.isSuccess=true;
-            state.product = action.payload;
+            state.banner = action.payload;
         })
         .addCase(getAllBanners.rejected,(state,action)=>{
             state.isLoading=false;

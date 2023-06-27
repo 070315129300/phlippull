@@ -34,14 +34,14 @@ const filteredData = categoriesState?.filter(
           <div className="row">
             <div className="col-6">
               <p className="text-white mb-0">
-                Free Shipping Over &#8358; 15000
+                
               </p>
             </div>
             <div className="col-6">
               <p className="text-end text-white mb-0">
                 Hotline:
-                <a className="text-white" href="tel:+234 8142720199 ">
-                  +234 (0)8142720199
+                <a className="text-white" >
+                  +234 (0)8164520367
                 </a>
               </p>
             </div>
@@ -53,6 +53,8 @@ const filteredData = categoriesState?.filter(
           <div className="row align-items-center">
             <div className="col-2">
               <h2>
+                    <NavLink to="/">
+
                 {/*<Link className="text-white">Dev Corner</Link>*/}
                 <img
                     src="images/shop4me.jpg"
@@ -60,6 +62,7 @@ const filteredData = categoriesState?.filter(
                     // className="img-fluid rounded-3"
                     alt="main banner"
                 />
+                </NavLink>
               </h2>
             </div>
             <div className="col-5">
@@ -94,9 +97,9 @@ const filteredData = categoriesState?.filter(
                     to="/wishlist"
                     className="d-flex align-items-center gap-10 text-white"
                   >
-                    <img src={wishlist} alt="wishlist" />
+                    <img src={''} alt="" />
                     <p className="mb-0">
-                      Favourite <br /> wishlist
+                     
                     </p>
                   </Link>
                 </div>
@@ -108,6 +111,22 @@ const filteredData = categoriesState?.filter(
                     <img src={user} alt="user" />
                     <p className="mb-0">
                       Log in
+                    </p>
+                  </Link>
+                </div>
+                 <div>
+                  <Link
+                    
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
+                    <img src={user} alt="user" />
+                    <p className="mb-0">
+                      <button
+                      onClick={() =>{
+                        localStorage.removeItem('customer' && 'token')
+                      }}
+                      >Log out</button>
+                      
                     </p>
                   </Link>
                 </div>
@@ -192,7 +211,7 @@ const filteredData = categoriesState?.filter(
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     {/*<NavLink to="/blogs">Blogs</NavLink>*/}
-                    <NavLink to="/contact">Contact</NavLink>
+                    {/* <NavLink to="/contact">Contact</NavLink> */}
                   </div>
                 </div>
               </div>

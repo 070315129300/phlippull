@@ -1,14 +1,20 @@
 import axios from "axios";
-import { base_url} from "../../utils/axiosConfig";
+import { base2_url } from "../../utils/axiosConfig";
 
-const getBanners = async()=>{
-    const response = await axios.get(`${base_url}/banner/getAll`);
-    console.log(response)
-    if(response){
-        return response;
+const getBanners = async () => {
+  
+    const response = await axios.post(
+      `https://user.shop4me.online/chopameasy/v1/get_banner_pics`
+    );
+     if(response){ 
+         return response;
+        // console.log(response);
     }
-}
+  };
 
-export const bannerService ={
-     getBanners
+ 
+
+
+export const bannerService = {
+  getBanners,
 };

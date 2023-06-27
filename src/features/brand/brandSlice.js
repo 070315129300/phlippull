@@ -1,43 +1,42 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
-import { categoriesService } from "./categoriesService";
+import { brandService } from "./brandService";
 
-export const categoriesQuery = createAsyncThunk("get/categories", async (thunkAPI) => {
+export const allbrand = createAsyncThunk("get/brand", async (thunkAPI) => {
   try {
-    return await categoriesService.getCategories();
+    return await brandService.getbrands();
   } catch (error) {
     return thunkAPI.rejectWithValue({ error: error.message });
   }
 });
 
-console.log(categoriesQuery)
 
 
-const categoriesState = {
-  categories: "",
+const brandState = {
+  brand: "",
   isError: false,
   isSuccess: false, 
   isLoading: false,
   message: ""
 };
 
-export const categoriesSlice = createSlice({
-  name: "categories",
-  initialState: categoriesState,
+export const brandSlice = createSlice({
+  name: "brand",
+  initialState: brandState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(categoriesQuery.pending, (state) => {
+      .addCase(allbrand.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(categoriesQuery.fulfilled, (state, action) => {
+      .addCase(allbrand.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.categories = action.payload;
+        state.brand = action.payload;
      
       })
-      .addCase(categoriesQuery.rejected, (state, action) => {
+      .addCase(allbrand.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
@@ -46,5 +45,5 @@ export const categoriesSlice = createSlice({
   },
 });
 
-export default categoriesSlice.reducer;
+export default brandSlice.reducer;
  

@@ -39,7 +39,7 @@ export const promoSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.payload?.error || "Unknown error occurred";
+        state.message = action.payload?.error;
       })
   },
 });

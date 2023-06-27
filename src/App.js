@@ -24,9 +24,6 @@ import SingleProduct from "./pages/SingleProduct";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import HoodiesJackets from "./pages/HoodiesJackets";
-import OurShorts from "./pages/Shorts";
-import Ourshirts from "./pages/Shirts";
-import Trousers from "./pages/Trousers";
 import Footwears from "./pages/Footwears";
 function App() {
   return (
@@ -56,10 +53,7 @@ function App() {
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="term-conditions" element={<TermAndContions />} />
             <Route path="hoodies" element={<HoodiesJackets />} />
-            <Route path="shorts" element={<OurShorts />} />
-            <Route path="trousers" element={<Trousers />} />
             <Route path="footwears" element={<Footwears  />} />
-            <Route path="shirts" element={<Ourshirts  />} />
           </Route>
         </Routes>
       </BrowserRouter>
