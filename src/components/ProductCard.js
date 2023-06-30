@@ -37,7 +37,7 @@ const ProductCard = (props) => {
 
     const uploadCart = () =>{
         dispatch(addProdToCart({
-          productID:currentItems?._id,
+          productId:currentItems?._id,
           price:currentItems?.price
         }))
     }

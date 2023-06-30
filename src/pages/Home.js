@@ -10,6 +10,7 @@ import BrandCard from "../components/brandcard";
 import { getAllProducts } from "../features/products/productSlice";
 import { getAllPromo } from "../features/promo/promoSlice";
 import { allbrand } from "../features/brand/brandSlice";
+import { loginUser } from "../features/user/userSlice"; 
 import { bannerService } from "../features/banners/bannerService";
 
 const Home = () => {
@@ -17,6 +18,8 @@ const Home = () => {
   const productState = useSelector((state) => state?.product?.product?.data);
   const promoState = useSelector((state) => state?.promo?.promo?.data);
   const brandState = useSelector((state) => state?.brand?.brand?.data?.brands);
+  const userState = useSelector((state) => state?.auth?.user?.data);
+  console.log(userState);
   const [bannerImages, setBannerImages] = useState([]);
 
   const filteredData = productState

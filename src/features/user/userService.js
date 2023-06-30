@@ -1,5 +1,9 @@
 import axios from "axios";
-import { base_url,base1_url, config} from "../../utils/axiosConfig";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { base_url,base1_url, config, apiKey} from "../../utils/axiosConfig";
+
 
 const register = async (userData) => {
   try {
@@ -39,35 +43,20 @@ const getUserWishlist = async () => {
     }
 }
 
-// const addToCart = async (cartData) => {
-//   console.log(cartData);
-//   console.log("found apikey")
-//   console.log(config);
-//   const response = await axios.post(`https://app.shop4me.online/bag/addToBag`, { data: cartData }, config);
-//   if (response) {
-//     console.log(response)
-//     return response;
-//   }
-// };
 
-const addToCart = async (cartData, apiKey) => {
-  console.log(apiKey);
+const addToCart = async (cartData) => {
+  
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
+  const requestData = {
+    ...cartData,
+    apiKey: apiKey
   };
 
   try {
     const response = await axios.post(
       "https://app.shop4me.online/bag/addToBag",
-      { data: cartData },
-      config
+      requestData
     );
-
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -76,60 +65,70 @@ const addToCart = async (cartData, apiKey) => {
 };
 
 
-// const getCart = async (cartData, apiKey) => {
-//   console.log(config);
-//   console.log('cayleb');
-//   console.log(apiKey);
 
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${apiKey}`,
-//       "Content-Type": "application/json",
-//     },
-//   };
+const getCart = async () => {
+  const requestURL = `${base_url}/bag/getBag/${apiKey}`;
 
-//   try {
-//     const response = await axios.post(
-//       "https://app.shop4me.online/view_bag",
-//       { data: cartData },
-//       config
-//     );
+  try {
+    const response = await axios.get(requestURL);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    // Handle error if needed
+  }
+};
 
-//     console.log(response.data);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     // Handle error if needed
-//   }
-// };
 
-const getCart = async (cartData, customerData) => {
-  const apiKey = customerData.data.apiKey;
-
-  const requestBody = {
-    data: cartData,
-    apiKey: apiKey,
+const removeProductFromCart = async (productId) =>{  
+    console.log(productId)
+  const requestData = {
+    ...productId,
+    apiKey: apiKey
   };
 
   try {
     const response = await axios.post(
-      "https://app.shop4me.online/view_bag",
-      requestBody
+      "https://app.shop4me.online/bag/removeItem",
+      requestData
     );
-
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error(error);
     // Handle error if needed
   }
 };
+
+const updateProductFromCart = async (productId) =>{  
+    console.log(productId)
+  const requestData = {
+    ...productId,
+    apiKey: apiKey
+  };
+
+  try {
+    const response = await axios.post(
+      "https://app.shop4me.online/bag/changeBagItem",
+      requestData
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    // Handle error if needed
+  }
+};
+
+
+
+
+
+
+
 
 
 
 
 export const authService ={ 
-    register, login, getUserWishlist, addToCart,getCart
+    register, login, getUserWishlist, addToCart,getCart, removeProductFromCart, updateProductFromCart
 };
 
 

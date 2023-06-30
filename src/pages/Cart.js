@@ -6,16 +6,38 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart } from "../features/user/userSlice";
+import { getUserCart, deleteCartProduct, updateCartProduct } from "../features/user/userSlice";
 
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const userCartState = useSelector(state=>state.auth.cartProducts)
-  useEffect(() =>{
+  const [quantity, setQuantity] = useState(null);
+  
+  const[totalAmount, setTotalAmount]= useState(null)
+  const userCartState = useSelector(state=>state?.auth?.cartProducts?.bag?.bagitem)
+  useEffect(() =>{ 
     dispatch(getUserCart())
   },[])
-  console.log(userCartState);
+
+ const deleteACartProduct = (productId) => {
+dispatch(deleteCartProduct({productId}))
+ setTimeout(()=>{
+  dispatch(getUserCart())
+ },200)
+} 
+ const updateACartProduct = (productId) => {
+dispatch(updateCartProduct({cartItemId:productId,quantity}))
+ setTimeout(()=>{
+  dispatch(getUserCart())
+ },200)
+} 
+useEffect(() =>{
+let sum = 0;
+for (let index = 0; index < userCartState?.length; index++){
+sum = sum + (Number(userCartState[index].quantity) * userCartState[index].product.price)
+setTotalAmount(sum)
+}
+},[userCartState])
   return (
     <>
       <Meta title={"Cart"} />
@@ -30,22 +52,21 @@ const Cart = () => {
               <h4 className="cart-col-4">Total</h4>
             </div>
             {
-            userCartState && userCartState?.map((item, index)=>{})
-
-            }
-            <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
+            userCartState && userCartState?.map((item, index)=>{
+              return(
+                 <div key={index} className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
               <div className="cart-col-1 gap-15 d-flex align-items-center">
                 <div className="w-25">
-                  <img src={''} className="img-fluid" alt="product image" />
+                  <img src={item?.product.images[0]} className="img-fluid" alt="product image" />
                 </div>
                 <div className="w-75">
-                  <p>GDffdhg</p>
-                  <p>Size: hgf</p>
-                  <p>Color: gfd</p>
+                   <p>{item?.product.name}</p> 
+                   <p>{item?.product.brand}</p> 
+
                 </div>
               </div>
               <div className="cart-col-2">
-                <h5 className="price">$ 100</h5>
+                <h5 className="price">{item?.product.price}</h5>
               </div>
               <div className="cart-col-3 d-flex align-items-center gap-15">
                 <div>
@@ -54,31 +75,41 @@ const Cart = () => {
                     type="number"
                     name=""
                     min={1}
-                    max={10}
+                    max={20}
                     id=""
+                    value={quantity ? quantity :item?.quantity}
+                    onChange={(e)=>{setQuantity(e.target.value)}}
                   />
                 </div>
                 <div>
-                  <AiFillDelete className="text-danger " />
+                  <AiFillDelete onClick={()=>{deleteACartProduct(item?.product._id)}} className="text-danger " />
                 </div>
               </div>
               <div className="cart-col-4">
-                <h5 className="price">$ 100</h5>
+                <h5 className="price">&#8358; {item?.product.price * item?.quantity}</h5>
               </div>
             </div>
+              )
+            })
+
+            }
+           
           </div>
           <div className="col-12 py-2 mt-4">
             <div className="d-flex justify-content-between align-items-baseline">
               <Link to="/product" className="button">
                 Continue To Shopping
               </Link>
+              { 
+              (totalAmount !== null || totalAmount !== 0) &&
               <div className="d-flex flex-column align-items-end">
-                <h4>SubTotal: $ 100</h4>
-                <p>Taxes and shipping calculated at checkout</p>
+                <h4>SubTotal: &#8358; {totalAmount}</h4>
+                <p>VAT and shipping calculated at checkout</p>
                 <Link to="/checkout" className="button">
                   Checkout
                 </Link>
-              </div>
+              </div> 
+}
             </div>
           </div>
         </div>

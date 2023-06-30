@@ -26,15 +26,15 @@ export const base2_url = "https://user.shop4me.online/chopameasy/v1";
 // https://user.shop4me.online/chopameasy/v1/get_banner_pics
 
 
-const customerData = localStorage.getItem("customer");
+const customerData = JSON.parse(localStorage.getItem("customer"));
 console.log("customerData:", customerData);
 
-const token = localStorage.getItem("apiKey");
-console.log("apiKey:", token);
+export const apiKey = customerData.data.apiKey;
+
 
 export const config = {
   headers: {
-    Authorization: `Bearer ${token}`,
+    Authorization: `Bearer ${''}`,
     Accept: "application/json",
     Customer: customerData, // Add customerData as a property
   },

@@ -27,6 +27,17 @@ const filteredData = categoriesState?.filter(
   const getCategories = () => {
     dispatch(categoriesQuery());
   }
+  const userCartState = useSelector(state=>state?.auth?.cartProducts?.bag?.bagitem)
+  console.log(userCartState)
+  const [total,setTotal]=useState(null)
+  useEffect(() =>{
+    let sum = 0;
+    for (let index = 0; index < userCartState?.length; index++){
+      sum = sum + (Number(userCartState[index].quantity) * Number(userCartState[index].product.price))
+      setTotal(sum)
+    }
+  },[userCartState])
+
   return (
     <>
       <header className="header-top-strip py-3">
@@ -137,6 +148,13 @@ const filteredData = categoriesState?.filter(
                   >
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
+                    
+<span className="badge bg-white text-dark">
+  {userCartState?.length ? userCartState.length : 0}
+</span>
+
+
+                      <p className="mb-0">&#8358;{total ? total : 0}</p>
                     </div>
                   </Link>
                 </div>
