@@ -28,18 +28,18 @@ export const base2_url = "https://user.shop4me.online/chopameasy/v1";
 
 const customerData = ''
 // JSON.parse(localStorage.getItem("customer"));
-// console.log("customerData:", customerData);
+
 
 // export const apiKey = customerData.data.apiKey;
-export const apiKey = '';
+export const apiKeys = '';
 
 
 export const config = {
-  // headers: {
-  //   Authorization: `Bearer ${''}`,
-  //   Accept: "application/json",
-  //   Customer: customerData, // Add customerData as a property
-  // },
+  headers: {
+    Authorization: `Bearer ${''}`,
+    Accept: "application/json",
+    Customer: customerData, // Add customerData as a property
+  },
 };
 
 

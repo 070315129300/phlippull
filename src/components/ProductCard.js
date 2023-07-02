@@ -19,14 +19,15 @@ const ProductCard = (props) => {
   let location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Updated hook
-
+const [quantity, setQuantity] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(24); // Number of items to display per page
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data?.slice(indexOfFirstItem, indexOfLastItem);
-
+  console.log(currentItems?._id,)
+const userState = useSelector((state) => state?.auth?.user?.data);
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
   };  
@@ -38,10 +39,12 @@ const ProductCard = (props) => {
     const uploadCart = () =>{
         dispatch(addProdToCart({
           productId:currentItems?._id,
-          price:currentItems?.price
+          quantity:quantity="1",
+          price:currentItems?.price,
+          apiKey:userState?.apiKey,
         }))
+      
     }
-
   const navigateToProduct = (_id) => {
     navigate(`/products/${_id}`); // Use navigate function to navigate to the single product page
   }; 

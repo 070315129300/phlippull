@@ -15,16 +15,19 @@ import { getAllProducts } from "../features/products/productSlice";
 const OurStore = () => {
   const [grid, setGrid] = useState(4);
   const productState = useSelector((state) =>state?.product?.product?.data);
-  
-      // const bannerState = useSelector((state) =>state.banner.banner);
+  const userState = useSelector((state) => state?.auth?.user?.data);
 
+  console.log(userState);
+      // const bannerState = useSelector((state) =>state.banner.banner);
+ 
   const dispatch = useDispatch();
   useEffect(() =>{
     getProducts();
-  },[])
+  },[]) 
   const getProducts = () => {
     dispatch(getAllProducts());
   }
+   
   return (
     <>
       <Meta title={"Our Store"} />

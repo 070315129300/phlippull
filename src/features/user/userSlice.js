@@ -17,7 +17,7 @@ export const loginUser= createAsyncThunk("auth/login", async(usersData,thunkAPI)
         return await authService.login( usersData);
         
     }catch(error){
-        return thunkAPI.rejectWithValue(error);
+        return thunkAPI.rejectWithValue(error); 
     }
     
 });
@@ -49,15 +49,25 @@ export const getUserCart = createAsyncThunk("user/cart/get", async(cartData, thu
   
 });
 
-export const deleteCartProduct = createAsyncThunk("user/cart/product/delete", async(productId, thunkAPI)=>{
+// export const deleteCartProduct = createAsyncThunk("user/cart/product/delete", async(productId, thunkAPI)=>{
     
-    try{
-        return await authService.removeProductFromCart(productId);
-    }catch(error){
-        return thunkAPI.rejectWithValue(error);
-    }
+//     try{
+//         return await authService.removeProductFromCart(productId, );
+//     }catch(error){
+//         return thunkAPI.rejectWithValue(error);
+//     }
   
-});
+// });
+export const deleteCartProduct = createAsyncThunk(
+  "user/cart/product/delete",
+  async ({ productId, apiKey }, thunkAPI) => {
+    try {
+      return await authService.removeProductFromCart(productId, apiKey);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 export const updateCartProduct = createAsyncThunk("user/cart/product/update", async(cartDetail, thunkAPI)=>{
     
@@ -91,8 +101,7 @@ export const authSlice = createSlice({
         builder
     .addCase(registerUser.pending,(state)=>{
             state.isLoading=true;
-        })
-        .addCase(registerUser.fulfilled,(state,action)=>{
+        }).addCase(registerUser.fulfilled,(state,action)=>{
             state.isLoading=false;
             state.isError=false;
             state.isSuccess=true;
@@ -100,8 +109,7 @@ export const authSlice = createSlice({
             if (state.isSuccess === true){
                 toast.info("User Created Successfully");
             }
-        })
-        .addCase(registerUser.rejected,(state,action)=>{
+        }).addCase(registerUser.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;

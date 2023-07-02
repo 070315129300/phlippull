@@ -11,21 +11,31 @@ import { getUserCart, deleteCartProduct, updateCartProduct } from "../features/u
 const Cart = () => {
   const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(null);
-  
+  const userState = useSelector((state) => state?.auth?.user?.data);
+  console.log(userState);
   const[totalAmount, setTotalAmount]= useState(null)
   const userCartState = useSelector(state=>state?.auth?.cartProducts?.bag?.bagitem)
   useEffect(() =>{ 
-    dispatch(getUserCart())
+    dispatch(getUserCart({
+         apiKey:userState?.apiKey,
+
+    }))
   },[])
 
- const deleteACartProduct = (productId) => {
-dispatch(deleteCartProduct({productId}))
- setTimeout(()=>{
-  dispatch(getUserCart())
- },200)
-} 
+  const deleteACartProduct = (productId) => {
+  dispatch(deleteCartProduct({ productId, apiKey: userState?.apiKey }));
+  setTimeout(() => {
+    dispatch(getUserCart());
+  }, 200);
+};
+
+
  const updateACartProduct = (productId) => {
-dispatch(updateCartProduct({cartItemId:productId,quantity}))
+dispatch(updateCartProduct({
+                    cartItemId:productId,
+                    quantity,
+                    apiKey:userState?.apiKey
+                  }))
  setTimeout(()=>{
   dispatch(getUserCart())
  },200)

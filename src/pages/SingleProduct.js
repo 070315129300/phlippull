@@ -7,11 +7,10 @@ import Color from "../components/Color";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import {useDispatch, useSelector} from "react-redux";
 import {getAProduct} from "../features/products/productSlice";
-import {addProdToCart, loginUser} from "../features/user/userSlice";
+import {addProdToCart,} from "../features/user/userSlice";
 import {toast} from "react-toastify";
 
 const SingleProduct = () => {
@@ -19,8 +18,8 @@ const SingleProduct = () => {
 const [quantity, setQuantity] = useState(1);
 
   const productState = useSelector((state) =>state?.product?.product);
-  const authState = useSelector((state) =>state?.auth?.user);
-
+const userState = useSelector((state) => state?.auth?.user?.data);
+  console.log(userState);
   
 
   const location = useLocation();
@@ -34,10 +33,12 @@ const [quantity, setQuantity] = useState(1);
         dispatch(addProdToCart({
           productId:productState?._id,
           quantity,
-          price:productState?.price
+          price:productState?.price,
+          apiKey:userState?.apiKey,
         }))
       
     }
+    
   const props = {
     width: 594,
     height: 600,
@@ -161,7 +162,7 @@ const [quantity, setQuantity] = useState(1);
             <h4>Description</h4>
             <div className="bg-white p-3">
                  <p className="product-data">{productState?.details}</p>
-
+                  <p className="product-data">{userState?.apiKey}</p>
             </div>
           </div>
               </div>
