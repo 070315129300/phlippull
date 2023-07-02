@@ -25,17 +25,18 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import HoodiesJackets from "./pages/HoodiesJackets";
 import Footwears from "./pages/Footwears";
+
 function App() {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="product" element={<OurStore />} />
-           <Route path="productcopy" element={<OurStorecopy />} />
+            <Route path="productcopy" element={<OurStorecopy />} />
 
             <Route path="products/:id" element={<SingleProduct />} />
             <Route path="blogs" element={<Blog />} />
@@ -53,13 +54,12 @@ function App() {
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="term-conditions" element={<TermAndContions />} />
             <Route path="hoodies" element={<HoodiesJackets />} />
-            <Route path="footwears" element={<Footwears  />} />
+            <Route path="footwears" element={<Footwears />} />
           </Route>
         </Routes>
       </BrowserRouter>
     </>
   );
-
 }
 
 export default App;
