@@ -121,12 +121,6 @@ const updateProductFromCart = async (productId) =>{
 
 
 
-
-
-
-
-
-
 export const authService ={ 
     register, login, getUserWishlist, addToCart,getCart, removeProductFromCart, updateProductFromCart
 };
@@ -134,5 +128,3 @@ export const authService ={
 
 
 
-
-//https://app.shop4me.online/bag/addToBag   const response=await axios.get(`https://app.shop4me.online/view_bag`,cartData, config);
