@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import prodcompare from "../images/prodcompare.svg";
-import wish from "../images/wish.svg";
-import wishlist from "../images/wishlist.svg";
-import watch from "../images/watch.jpg";
-import watch2 from "../images/watch-1.avif";
-import addcart from "../images/add-cart.svg";
-import view from "../images/view.svg";
-import ReactStars from "react-rating-stars-component";
+
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPromo } from "../features/promo/promoSlice";
 import {allbrand  } from "../features/brand/brandSlice";
 
 const Brandcard = (props) => {
