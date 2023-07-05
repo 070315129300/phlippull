@@ -24,9 +24,11 @@ const Cart = () => {
 
   const deleteACartProduct = (productId) => {
   dispatch(deleteCartProduct({ productId, apiKey: userState?.apiKey }));
+  
   setTimeout(() => {
     dispatch(getUserCart());
   }, 200);
+  window.location.reload()
 };
 
 
@@ -36,9 +38,11 @@ dispatch(updateCartProduct({
                     quantity,
                     apiKey:userState?.apiKey
                   }))
+                  window.location.reload();
  setTimeout(()=>{
   dispatch(getUserCart())
  },200)
+
 } 
 useEffect(() =>{
 let sum = 0;

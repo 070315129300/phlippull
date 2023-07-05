@@ -37,7 +37,12 @@
     max-width:100%;
 
 }
-
+.cartstyles{
+  padding-left: 30px;
+}
+.cartstyle{
+  padding-left: 500px;
+}
 .pagination .page-item a {
   display: inline-block;
   padding: 5px 10px;
@@ -81,7 +86,7 @@
   font-size: 26px;
   line-height: 32px;
   font-weight: 500;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .card-wrapper {
   background-color: white;
@@ -331,7 +336,29 @@ footer .input-group-text {
   font-size: 14px;
 }
 /*  Blog Part ends here */
+/* new categories*/
+.cat-card {
+  padding: 15px;
+  background-color: #232f3e;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 60px;
+  height: 60px;
+}
+.cat-card .cat-image {
+  height: 50px;
+}
+.cat-card .cat-image img {
+  object-fit: contain;
+}
 
+cat-card .cat-details span {
+  color: grey;
+  text-align: center;
+  font-size: 8px;
+}
+
+/*new categories end here*/
 /* Product Card */
 
 .product-card {

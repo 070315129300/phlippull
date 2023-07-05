@@ -45,25 +45,33 @@ const userState = useSelector((state) => state?.auth?.user?.data);
           <div
             key={index}
             className={`${
-              location.pathname === "/product" ? `gr-${grid}` : "col"
+              location.pathname === "/product" ? `gr-${grid}` : "col-3"
             }`}
             onClick={() => {handleClick(item?.name)}}
           >
               <Link           
-            className="cat-card position-relative" to="/productcopy"  state={{ category: { item } }}>
-              <div className="cat-image">
+            className="product-card position-relative" to="/productcopy"  state={{ category: { item } }}>
+              <div className="product-image">
                  <img
                   src={item?.icon}
                   className="img-fluid"
                   alt="product image"
-                  width={30}
-                   height={30}
+                  width={100}
+                   height={100}
                 />
-              </div>              
-                 </Link>
-                 <div className="cat-details">
-                <span>{item?.name}</span>
+                <img
+                  src={item?.icon}
+                  className="img-fluid"
+                  alt="product image"
+                  width={100}
+                   height={100}
+                />
+              </div>
+              
+              <div className="product-details">
+                <h6 className="brand">{item?.name}</h6>
                  </div>
+                 </Link>
           </div>
 
         );

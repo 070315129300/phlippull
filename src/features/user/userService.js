@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "./userSlice";
 
 import { base_url,base1_url, config,apiKeys} from "../../utils/axiosConfig";
 
@@ -35,6 +36,19 @@ const login = async(usersData)=>{
         return response;
     }
 }
+
+const logout = async () => {
+   try {
+      // Clear local storage
+      localStorage.removeItem("customer");
+
+      // Additional logout logic can be added if needed
+    } catch (error) {
+      console.error(error);
+      // Handle error if needed
+    }
+};
+
 
 const addToCart = async (cartData) => {
   try {
@@ -136,7 +150,7 @@ const updateProductFromCart = async (productId, apiKey) =>{
 
 
 export const authService ={ 
-    register, login, getUserWishlist, addToCart,getCart, removeProductFromCart, updateProductFromCart
+    register, login, getUserWishlist, addToCart,getCart, removeProductFromCart, updateProductFromCart,logout,
 };
 
 

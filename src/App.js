@@ -53,8 +53,8 @@ function App() {
             <Route path="refund-policy" element={<RefundPloicy />} />
             <Route path="shipping-policy" element={<ShippingPolicy />} />
             <Route path="term-conditions" element={<TermAndContions />} />
-            <Route path="hoodies" element={<HoodiesJackets />} />
-            <Route path="footwears" element={<Footwears />} />
+            <Route path="account" element={<HoodiesJackets />} />
+            <Route path="orders" element={<Footwears />} />
           </Route>
         </Routes>
       </HashRouter>

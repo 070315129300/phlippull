@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link, Route } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
+import { NavLink, Link } from "react-router-dom";
+import { BsSearch, BsPersonFill, BsClipboardCheck, BsPerson } from "react-icons/bs";
 import compare from "../images/compare.svg";
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
@@ -9,34 +9,58 @@ import menu from "../images/menu.svg";
 import CategoriesCard from "./categoriesCard";
 import { categoriesQuery } from "../features/categories/categoriesSlice";
 import { useDispatch, useSelector } from "react-redux";
-
-
+import { logoutUser } from "../features/user/userSlice";
 
 const Header = () => {
-    const [grid, setGrid] = useState(4);
-  const categoriesState = useSelector((state) =>state?.categories?.categories?.data?.categories);
-  
-      // const bannerState = useSelector((state) =>state.banner.banner);
-const filteredData = categoriesState?.filter(
+  const [grid, setGrid] = useState(4);
+  const categoriesState = useSelector(
+    (state) => state?.categories?.categories?.data?.categories
+  );
+
+  const filteredData = categoriesState?.filter(
     (category) => category.available === true
   );
   const dispatch = useDispatch();
-  useEffect(() =>{
+  
+  useEffect(() => {
     getCategories();
-  },[])
+  }, []);
+
   const getCategories = () => {
     dispatch(categoriesQuery());
-  }
-  const userCartState = useSelector(state=>state?.auth?.cartProducts?.bag?.bagitem)
-  console.log(userCartState)
-  const [total,setTotal]=useState(null)
-  useEffect(() =>{
+  };
+
+  const userCartState = useSelector(
+    (state) => state?.auth?.cartProducts?.bag?.bagitem
+  );
+  const userState = useSelector((state) => state?.auth?.user?.data);
+console.log(userState)
+const name = userState?.fname;
+
+console.log(name);
+
+   
+  
+  
+  const [total, setTotal] = useState(null);
+  
+  useEffect(() => {
     let sum = 0;
-    for (let index = 0; index < userCartState?.length; index++){
-      sum = sum + (Number(userCartState[index].quantity) * Number(userCartState[index].product.price))
-      setTotal(sum)
+    for (let index = 0; index < userCartState?.length; index++) {
+      sum += Number(userCartState[index].quantity) * Number(userCartState[index].product.price);
     }
-  },[userCartState])
+    setTotal(sum);
+  }, [userCartState]);
+
+  const logout = () => {
+    // Clear local storage
+    localStorage.removeItem("customer");
+
+    // Clear Redux state
+    dispatch(logoutUser());
+
+    // Additional logout logic can be added if needed
+  };
 
   return (
     <>
@@ -90,7 +114,9 @@ const filteredData = categoriesState?.filter(
                 </span>
               </div>
             </div>
+            
             <div className="col-5">
+              
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 {/*<div>*/}
                 {/*  <Link*/}
@@ -103,6 +129,7 @@ const filteredData = categoriesState?.filter(
                 {/*    </p>*/}
                 {/*  </Link>*/}
                 {/*</div>*/}
+                  
                 <div>
                   <Link
                     to="/wishlist"
@@ -114,129 +141,143 @@ const filteredData = categoriesState?.filter(
                     </p>
                   </Link>
                 </div>
-                <div>
-                  <Link
-                    to="/login"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={user} alt="user" />
-                    <p className="mb-0">
-                      Log in
-                    </p>
-                  </Link>
-                </div>
                  <div>
-                  <Link
-                    
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={user} alt="user" />
-                    <p className="mb-0">
-                      <button
-                      onClick={() =>{
-                        localStorage.removeItem('customer' && 'token')
-                      }}
-                      >Log out</button>
-                      
-                    </p>
-                  </Link>
-                </div>
-                <div>
-                  <Link
-                    to="/cart"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={cart} alt="cart" />
-                    <div className="d-flex flex-column gap-10">
-                    
-<span className="badge bg-white text-dark">
-  {userCartState?.length ? userCartState.length : 0}
-</span>
-
-
-                      <p className="mb-0">&#8358;{total ? total : 0}</p>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-      <header className="header-bottom py-3">
-        <div className="container-xxl">
-          <div className="row">
-            <div className="col-12">
-              <div className="menu-bottom d-flex align-items-center gap-30">
-                <div>
-                  <div className="dropdown">
+                      <Link to="product"
+                       className="d-flex align-items-center gap-10 text-white"
+                        >
+                      STORE
+                       </Link>
+                     </div>
+                    <div> 
+                
+                  <div className="dropdown" style={{ paddingLeft: '30px' }}>
                     <button
-                      className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-15 d-flex align-items-center"
+                      className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-15 d-flex align-items-center "
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={menu} alt="" />
-                      <span className="me-5 d-inline-block">
-                        Shop Categories
+                      <span className="me-10 d-inline-block ">
+                        Account
                       </span>
                     </button>
                     <ul
-                      className="dropdown-menu"
+                      className="dropdown-menu bg-white"
                       aria-labelledby="dropdownMenuButton1"
                     >
-                      <li>
-                        {/* <Link className="dropdown-item text-white" to="/hoodies">
-                         <div className="row">
-                          <div className="col-6">cay</div>
-                           <div className="col-6">tobi</div>
+                      <li className="dropdown-item bg-white">
+                                <div className="bg-white">
+          {name ? (
+            <Link
+              to=""
+              className="dropdown-item text-dark bg-white align-items-center gap-10"
+              onClick={logout}
+            >
+              <p className="mb-0">
+                Logout
+              </p>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="dropdown-item text-dark bg-white align-items-center gap-10"
+            >
+              
+              <p className="mb-0">
+               <BsPersonFill size={32} />
+                Login
+              </p>
+            </Link>
+          )}
+        </div>
 
-                         </div>
-                        </Link> */}
                       </li>
-                      <li>
-                        {/* <Link className="dropdown-item text-white"  */}
-                        {/* to="/shorts" */}
-                        {/* > */}
-                             <CategoriesCard 
-                    grid={grid} 
-                        data={filteredData ? filteredData : []} />
-                        {/* </Link> */}
+  
+                      <li className="dropdown-item bg-white">
+                               <div>
+          {name ? (
+            <Link
+              to="/account"
+              className="dropdown-item text-dark bg-white align-items-center gap-10"
+              
+            >
+              
+              <p className="mb-0">
+                <BsPerson size={32} />
+                {name}
+              </p>
+            </Link>
+          ) : (
+            <Link
+              to=""
+              className="dropdown-item text-dark bg-white align-items-center gap-10"
+            >
+             
+              <p className="mb-0">
+                <BsPerson size={32}/>
+                 Account
+              </p>
+            </Link>
+          )}
+        </div>
+
+                      </li>
+                      <li className="dropdown-item bg-white">
+                        <Link className="dropdown-item text-dark bg-white" to="/orders">
+                        
+                        <BsClipboardCheck size={32} />
+                        Order
+                        </Link>
                       </li>
                          
-                  
-                      {/* <li>
-                        <Link className="dropdown-item text-white" to="/trousers">
-                          Trousers
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="/footwears">
-                          Footwears
-                        </Link>
-                      </li>
-                      <li>
-                        <Link className="dropdown-item text-white" to="/shirts">
-                          Shirts
-                        </Link>
-                      </li> */}
+                
                     </ul>
                   </div>
-                </div>
-                <div className="menu-links">
-                  <div className="d-flex align-items-center gap-15">
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
-                    {/*<NavLink to="/blogs">Blogs</NavLink>*/}
-                    {/* <NavLink to="/contact">Contact</NavLink> */}
-                  </div>
+                  </div>      
+                  {/* <div>
+          {name ? (
+            <Link
+              to="/"
+              className="d-flex align-items-center gap-10 text-white"
+              onClick={logout}
+            >
+              <img src={user} alt="user" />
+              <p className="mb-0">
+                Logout
+              </p>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="d-flex align-items-center gap-10 text-white"
+            >
+              <img src={user} alt="user" />
+              <p className="mb-0">
+                Login
+              </p>
+            </Link>
+          )}
+        </div> */}
+          <div>
+                      
+                  <Link
+                    to="/cart"
+                    className="d-flex flex-column align-items-center text-white cartstyle"
+                  > 
+                                
+                <span className="cartstyles">
+              {userCartState?.length ? userCartState.length : ''}
+                </span>
+                <img src={cart} alt="cart" width={25} />                
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </header>
+      
     </>
   );
 };

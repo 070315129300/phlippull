@@ -42,8 +42,8 @@ const Brandcard = (props) => {
 
            <Link  to="/productcopy"  state={{ brand: { item } }}>
                <div className="row">
-                 <div className="col-4"><img src={item?.icon} width="25px"  /></div>
-                 <div className="col-8"><h6>{item?.name}</h6></div>
+                 <div className="col-4"><img src={item?.icon} width="50px"  /></div>
+                 {/* <div className="col-8"><h6>{item?.name}</h6></div> */}
 
                  </div>                 
            </Link>

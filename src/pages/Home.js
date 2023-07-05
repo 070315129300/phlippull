@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Slider from "react-slick";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import Container from "../components/Container";
 import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import PromoCard from "../components/PromoCard";
 import BrandCard from "../components/brandcard";
+import CategoriesCard from "../components/categoriesCard";
 import { getAllProducts } from "../features/products/productSlice";
 import { getAllPromo } from "../features/promo/promoSlice";
 import { allbrand } from "../features/brand/brandSlice";
 import { loginUser } from "../features/user/userSlice"; 
 import { bannerService } from "../features/banners/bannerService";
+import { categoriesQuery } from "../features/categories/categoriesSlice";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 
 const Home = () => {
   const [grid, setGrid] = useState(4);
@@ -21,7 +25,13 @@ const Home = () => {
   const userState = useSelector((state) => state?.auth?.user?.data);
   console.log(userState);
   const [bannerImages, setBannerImages] = useState([]);
+const categoriesState = useSelector(
+    (state) => state?.categories?.categories?.data?.categories
+  );
 
+  const filteredCat = categoriesState?.filter(
+    (category) => category.available === true
+  );
   const filteredData = productState
     ?.filter((product) => product.top_item === true)
     .sort((a, b) => b.uploaded_at - a.uploaded_at); // Sort the special products in ascending order based on their IDs
@@ -39,6 +49,7 @@ const Home = () => {
     getProducts();
     getPromo();
     getbrand();
+    getCategories();
     const fetchBannerImages = async () => {
       try {
         const response = await bannerService.getBanners();
@@ -51,15 +62,7 @@ const Home = () => {
     fetchBannerImages();
   }, []);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 5000,
-  };
+
 
   const getProducts = () => {
     dispatch(getAllProducts());
@@ -73,39 +76,97 @@ const Home = () => {
     dispatch(getAllPromo());
   };
 
+    const getCategories = () => {
+    dispatch(categoriesQuery());
+  };
+
+  const responsive ={
+    suoerLargeDesktop:{
+      breakpoint: {max: 4000, min:3000},
+      items:5
+    },
+    desktop:{
+      breakpoint: {max: 3000, min:1024},
+      items:3
+    },
+    tablet:{
+      breakpoint: {max: 1024, min:464},
+      items:2
+    },
+    tablet:{
+      breakpoint: {max:464, min:0},
+      items:1
+    }
+  }
+const settings = {
+  dots: true, // Display dots navigation
+  infinite: true, // Enable infinite loop
+  speed: 500, // Transition speed in milliseconds
+  slidesToShow: 1, // Number of slides to show at a time
+  slidesToScroll: 1, // Number of slides to scroll at a time
+  autoplay: true, // Enable autoplay
+  autoplaySpeed: 3000, // Autoplay interval in milliseconds
+};
+  
+
   return (
     <>
-      <Container class1="home-wrapper-1 py-5">
+     
+      <Container className="home-wrapper-1 py-5 home-wrapper-2 ">
         <div className="row">
           <div className="col">
-            <Slider {...settings}>
-              {bannerImages.length > 0 ? (
-                bannerImages.map((imageUrl) => (
-                  <div className="" key={imageUrl}>
-                    <img
-                      src={imageUrl}
-                      className=""
-                      alt="main banner"
-                      style={{ height: "500px", width: "100%" }}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className="">
+           <Slider {...settings}>
+            {bannerImages.length > 0 ? (
+              bannerImages.map((imageUrl) => (
+                <div className="" key={imageUrl}>
                   <img
-                    src={""}
+                    src={imageUrl}
                     className=""
                     alt="main banner"
                     style={{ height: "500px", width: "100%" }}
                   />
                 </div>
-              )}
-            </Slider>
-          </div>
+              ))
+            ) : (
+              <div className="">
+                <img
+                  src={""}
+                  className=""
+                  alt="main banner"
+                  style={{ height: "500px", width: "100%" }}
+                />
+              </div>
+            )}
+          </Slider>
+          
+            <Carousel responsive={responsive}>
+             
+                 <div>Item 1</div>
+                <div>Item 2</div>
+               <div>Item 3</div>
+                <div>Item 1</div>
+              <div>Item 2</div>
+               <div>Item 3</div>
+             
+            </Carousel>
+          </div> 
         </div>
       </Container>
 
-      <Container class1="home-wrapper-2 py-5">
+        <Container class1="special-wrapper py-5 home-wrapper-2">
+        <div className="row">
+          <div className="col-12">
+            <h3 className="section-heading">Categories</h3>
+          </div>
+        </div>
+        <div className="row">
+            <CategoriesCard 
+                    grid={grid} 
+                        data={filteredCat ? filteredCat : []} />
+        </div>
+      </Container>
+
+      <Container className="home-wrapper-2 py-5">
         {promoState && promoState.length > 0 && (
           <div className="row">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">

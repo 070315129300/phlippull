@@ -147,14 +147,13 @@ const userState = useSelector((state) => state?.auth?.user?.data);
                   <div className="d-flex align-items-center gap-30 ms-5">
                     <button
                       className="button border-0"
-                      // data-bs-toggle="modal"
-                      // data-bs-target="#staticBackdrop"
+                     
                       type="button"
                       onClick={()=>{uploadCart( )}}
                     >
                       Add to Cart
                     </button>
-                    {/* <button className="button signup">Buy It Now</button> */}
+                   
                   </div>
                 </div>
 

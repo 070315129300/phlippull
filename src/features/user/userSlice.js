@@ -22,6 +22,17 @@ export const loginUser= createAsyncThunk("auth/login", async(usersData,thunkAPI)
     
 });
 
+export const logoutUser = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await authService.logout();
+    localStorage.removeItem("token");
+    localStorage.removeItem("customer");
+    return true;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 export const getUserProductWishlist = createAsyncThunk("user/wishlist", async(thunkAPI)=>{
     try{
         return await authService.getUserWishlist( );
@@ -206,7 +217,7 @@ export const authSlice = createSlice({
            }
         })
         .addCase(deleteCartProduct
-.rejected,(state,action)=>{
+        .rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;
@@ -214,12 +225,28 @@ export const authSlice = createSlice({
             if(state.isSuccess===false){
             toast.error('Something Went Wrong!');
            }
-        }) .addCase(updateCartProduct
-.pending,(state)=>{
+        }).addCase(logoutUser.pending, (state) => {
+      state.isLoading = true;
+    })
+    .addCase(logoutUser.fulfilled, (state) => {
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = true;
+      state.user = null;
+      toast.info("User Logged Out Successfully");
+    })
+    .addCase(logoutUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.message = action.error;
+      toast.error(action.error);
+    }) .addCase(updateCartProduct
+    .pending,(state)=>{
             state.isLoading=true;
         })
         .addCase(updateCartProduct
-.fulfilled,(state,action)=>{
+    .fulfilled,(state,action)=>{
             state.isLoading=false;
             state.isError=false; 
             state.isSuccess=true;
@@ -229,7 +256,7 @@ export const authSlice = createSlice({
            }
         })
         .addCase(updateCartProduct
-.rejected,(state,action)=>{
+    .rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;

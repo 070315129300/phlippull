@@ -13,6 +13,7 @@ import PlacesAutocomplete, {
   getLatLng,
 } from "react-places-autocomplete";
 import { getUserCart, deleteCartProduct, updateCartProduct } from "../features/user/userSlice";
+import axios from "axios";
 
 const orderSchema = yup.object({
   firstName: yup.string().required("firstname is required"),
@@ -67,10 +68,10 @@ const Checkout = () => {
       lastName: ""
     },
      validationSchema: orderSchema,
-  onSubmit: (values) => {
+  onSubmit: async (values) => {
      try {
        const handler = paystackpop.setup({
-          key: "pk_test_8a31ed25dc422dc1a6279b893161f2a114715b02",
+          key: "pk_live_95271faefe19d6404e1b7c176fe212acbf864b24",
           amount: totalAmount * 100, // Paystack requires amount in kobo, multiply by 100 for naira
           email: "cay@gmail.com",
           currency: 'NGN',
@@ -81,29 +82,29 @@ const Checkout = () => {
         },
       });
       handler.openIframe();
-    } catch (error) {
+
+       // Send the form data to the server to create the order
+      const response = await axios.post("https://app.shop4me.online/order/create_order", {
+        address: values.address,
+        phone: values.phone,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        
+        
+
+
+      });
+
+      // Handle the response from the server
+      console.log("Order created:", response.data);
+      // Perform any additional actions based on the response
+
+    }
+     catch (error) {
       console.error("Error creating user:", error);
     }
   },
 });
- 
-//   validationSchema: orderSchema,
-//   onSubmit: (values) => {
-//     try {
-//       const handler = PaystackPop.setup({
-//         key: 'YOUR_PUBLIC_KEY', // Replace with your public key
-//         email: values.email,
-//         amount: totalAmount * 100, // Paystack requires amount in kobo, multiply by 100 for naira
-//         currency: 'NGN', // Use GHS for Ghana Cedis or USD for US Dollars
-//         ref: 'YOUR_REFERENCE', // Replace with a reference you generated
-//         callback: function (response) {
-//           // This happens after the payment is completed successfully
-//           var reference = response.reference;
-//           alert('Payment complete! Reference: ' + reference);
-//           // Make an AJAX call to your server with the reference to verify the transaction
-//         },
-  
-
 
   const handleSelect = async (value) => {
     try {

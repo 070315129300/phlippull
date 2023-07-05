@@ -41,7 +41,6 @@ const Login = () => {
     },
   });
  
-
   return (
     <>
       <Meta title={"Login"} />
