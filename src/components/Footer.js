@@ -97,14 +97,14 @@ const Footer = () => {
             <div className="col-4">
               <h4 className="text-white mb-4">Our Apps</h4>
               <div className="footer-link d-flex flex-column">
-                <small className="text-white mb-4">Download our app it one click away</small>
+                <small className="text-white mb-4">Download our app</small>
               <div className="row">
 
                 <div className="col-6"><small>
                   
                         <NavLink to="https://apps.apple.com/ng/app/shop4me/id6449968422" target="_blank">
 
-                {/*<Link className="text-white">Dev Corner</Link>*/}
+               
                 <img
                     src="images/appstorelogo.png"
                     style={{ height: '50px', width: '150px' }}

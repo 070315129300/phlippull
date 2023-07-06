@@ -57,7 +57,7 @@ const userState = useSelector((state) => state?.auth?.user?.data);
           <div
             key={index}
             className={`${
-              location.pathname === "/product" ? `gr-${grid}` : "col-3"
+              location.pathname === "/product" ? `gr-${grid}` : "col-12 col-md-3 col-sm-12"
             }`}
           >
             <Link

@@ -8,6 +8,7 @@ import {addProdToCart} from "../features/user/userSlice";
 
 const CategoriesCard = (props) => {
   const { grid, data } = props;
+  
 
   let location = useLocation();
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const userState = useSelector((state) => state?.auth?.user?.data);
   }
   return (
     <>
+    
       {currentItems?.map((item, index) => {
         return (
           <div
@@ -73,3 +75,12 @@ const userState = useSelector((state) => state?.auth?.user?.data);
 };
 
 export default CategoriesCard;
+
+
+
+
+
+
+
+
+
