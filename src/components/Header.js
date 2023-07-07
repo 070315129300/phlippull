@@ -38,9 +38,6 @@ console.log(userState)
 const name = userState?.fname;
 
 console.log(name);
-
-   
-  
   
   const [total, setTotal] = useState(null);
   
@@ -58,6 +55,7 @@ console.log(name);
 
     // Clear Redux state
     dispatch(logoutUser());
+    
 
     // Additional logout logic can be added if needed
   };
@@ -80,7 +78,7 @@ console.log(name);
       <header className="header-upper py-3 ">
         <div className="container-xxl">
           <div className="row align-items-center">
-            <div className="col-xl-2 ">
+            <div className="col-xl-2 col-sm-1 ">
               
                     <NavLink to="/">
 
@@ -93,52 +91,29 @@ console.log(name);
                 </NavLink>
               
             </div>
-            <div className="col-xl-4 col-sm-10 ">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-2 sm:py-1"
-                  placeholder="Search Product Here..."
-                  aria-label="Search Product Here..."
-                  aria-describedby="basic-addon2"
-                />
-                <span className="input-group-text d-none d-sm-flex p-3" id="basic-addon2">
-                  <BsSearch className="fs-6" />
-                </span>
-              </div>
-            </div>
-
+        <div className="col-xl-4 d-none d-sm-flex">
+  <div className="input-group">
+    <input
+      type="text"
+      className="form-control py-2"
+      placeholder="Search Product Here..."
+      aria-label="Search Product Here..."
+      aria-describedby="basic-addon2"
+    />
+    <span className="input-group-text p-3" id="basic-addon2">
+      <BsSearch className="fs-6" />
+    </span>
+  </div>
+</div>
 
             
-            <div className="col-5">
+            <div className="col-3">
               
-              <div className="header-upper-links d-flex align-items-center justify-content-between">
-                {/*<div>*/}
-                {/*  <Link*/}
-                {/*    to="/compare-product"*/}
-                {/*    className="d-flex align-items-center gap-10 text-white"*/}
-                {/*  >*/}
-                {/*    <img src={compare} alt="compare" />*/}
-                {/*    <p className="mb-0">*/}
-                {/*      Compare <br /> Products*/}
-                {/*    </p>*/}
-                {/*  </Link>*/}
-                {/*</div>*/}
-                  
-                <div>
-                  <Link
-                    to="/wishlist"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={''} alt="" />
-                    <p className="mb-0">
-                     
-                    </p>
-                  </Link>
-                </div>
+              <div className="header-upper-links d-flex align-items-center justify-content-between">                  
+          
                  <div>
-                      <Link to=""
-                      // to="product"
+                      <Link 
+                      to="product"
                        className="d-flex align-items-center gap-10 text-white"
                         >
                       STORE
@@ -153,7 +128,7 @@ console.log(name);
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
-                      disabled
+                      
                     >
                       <span className="me-10 d-inline-block ">
                         Account
@@ -181,8 +156,8 @@ console.log(name);
             </Link>
           ) : (
             <Link
-              to="/"
-              // to="/login"
+              // to="/"
+              to="/login"
               className="dropdown-item text-dark bg-white align-items-center gap-10"
             >
             
@@ -202,8 +177,8 @@ console.log(name);
                                <div>
           {name ? (
             <Link
-              // to="/account"
-              to="/"
+              to="/account"
+              // to="/"
               className="dropdown-item text-dark bg-white align-items-center gap-10"
               
             >
@@ -232,8 +207,8 @@ console.log(name);
         </div>
                       </li>
                       <li className="dropdown-item bg-white">
-                        <Link className="dropdown-item text-dark bg-white" to="/"
-                        // to="/orders"
+                        <Link className="dropdown-item text-dark bg-white" 
+                        to="/orders"
                         >
                          <div className="row">
                 <div className="col-3">   <BsClipboardCheck size={20} /></div>
@@ -243,40 +218,16 @@ console.log(name);
               </div>
                         </Link>
                       </li>
-                         
-                
+                                         
                     </ul>
                   </div>
                   </div>      
-                  {/* <div>
-          {name ? (
-            <Link
-              to="/"
-              className="d-flex align-items-center gap-10 text-white"
-              onClick={logout}
-            >
-              <img src={user} alt="user" />
-              <p className="mb-0">
-                Logout
-              </p>
-            </Link>
-          ) : (
-            <Link
-              to="/login"
-              className="d-flex align-items-center gap-10 text-white"
-            >
-              <img src={user} alt="user" />
-              <p className="mb-0">
-                Login
-              </p>
-            </Link>
-          )}
-        </div> */}
+
           <div>
                       
                   <Link
-                    to="/"
-                    // to="/cart"
+                    // to="/"
+                    to="/cart"
                     className="d-flex flex-column align-items-center text-white cartstyle"
                   > 
                                 
@@ -286,6 +237,21 @@ console.log(name);
                 <img src={cart} alt="cart" width={25} />                
                   </Link>
                 </div>
+                <div className="col-xl-4 d-sm-none d-flex">
+  <div className="input-group">
+    <input
+      type="text"
+      className="form-control py-2"
+      placeholder="Search Product Here..."
+      aria-label="Search Product Here..."
+      aria-describedby="basic-addon2"
+    />
+    <span className="input-group-text p-3" id="basic-addon2">
+      <BsSearch className="fs-6" />
+    </span>
+  </div>
+</div>
+
               </div>
             </div>
           </div>
